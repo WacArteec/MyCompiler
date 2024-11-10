@@ -1,0 +1,85 @@
+# depslib dependency file v1.0
+1730308682 source:d:\codeblocks\mycompiler\main.cpp
+	<stdio.h>
+	<mumuCompiler.h>
+	"Implementer.h"
+	"structs_proc.h"
+	"FileInputer.h"
+	"enum.h"
+
+1731085861 source:d:\codeblocks\mycompiler\src\mumucompiler.cpp
+	<stdio.h>
+	<stdlib.h>
+	<assert.h>
+	<ctype.h>
+	<string.h>
+	"mumuCompiler.h"
+	"ComparStr.h"
+	"structs_proc.h"
+	"FileOut.h"
+	"enum.h"
+	"FileInputer.h"
+
+1729778053 d:\codeblocks\mycompiler\include\mumucompiler.h
+
+1729768175 source:d:\codeblocks\mycompiler\src\stack_for_comp.cpp
+	"stack_for_comp.h"
+	<stdlib.h>
+	<stdio.h>
+	<math.h>
+	<string.h>
+	<assert.h>
+	<stack_for_comp.h>
+
+1729768268 d:\codeblocks\mycompiler\include\stack_for_comp.h
+
+1731086368 source:d:\codeblocks\mycompiler\src\implementer.cpp
+	<stdio.h>
+	<math.h>
+	"Implementer.h"
+	"stack_for_comp.h"
+	"structs_proc.h"
+	"enum.h"
+	"FileInProc.h"
+
+1729775991 d:\codeblocks\mycompiler\include\implementer.h
+
+1728813727 source:d:\codeblocks\mycompiler\src\comparstr.cpp
+	<ctype.h>
+	"ComparStr.h"
+
+1728813727 d:\codeblocks\mycompiler\include\comparstr.h
+
+1729777105 d:\codeblocks\mycompiler\include\structs_proc.h
+
+1729539422 d:\codeblocks\mycompiler\include\fileinputer.h
+
+1730985074 source:d:\codeblocks\mycompiler\src\fileinputer.cpp
+	<stdio.h>
+	<stdlib.h>
+	<assert.h>
+	<errno.h>
+	<string.h>
+	"FileInputer.h"
+	"structs_proc.h"
+	"enum.h"
+
+1731086301 source:d:\codeblocks\mycompiler\src\fileout.cpp
+	<stdio.h>
+	<assert.h>
+	"FileOut.h"
+	"structs_proc.h"
+	"enum.h"
+
+1730395419 d:\codeblocks\mycompiler\include\fileout.h
+
+1731085675 d:\codeblocks\mycompiler\include\enum.h
+
+1731086230 source:d:\codeblocks\mycompiler\src\fileinproc.cpp
+	<stdio.h>
+	<assert.h>
+	"FileInProc.h"
+	"enum.h"
+
+1729774889 d:\codeblocks\mycompiler\include\fileinproc.h
+

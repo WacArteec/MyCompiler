@@ -1,0 +1,81 @@
+ins
+pop AX
+ins
+pop BX
+ins
+pop CX
+
+push AX
+push 0
+jeq linear
+
+push BX
+push BX
+mult
+push AX
+push CX
+push 4
+mult
+mult 
+sub
+pop DX
+
+push DX
+push 0
+jb nosolves
+
+push DX
+push 0
+jeq square
+
+jmp twosolves
+
+:linear
+	push CX
+	push 0
+	push BX
+	sub
+	idiv
+	out
+	hlt
+
+:nosolves
+	push DX
+	out
+	hlt
+
+:square
+	push 0
+	push BX
+	sub
+	push AX
+	idiv
+	push 2
+	idiv
+	out
+	hlt
+
+:twosolves
+	push DX
+	fsqrt
+	push BX
+	sub
+	push AX
+	idiv
+	push 2
+	idiv
+	out
+
+	push 0	
+	push DX
+	fsqrt
+	sub
+	push BX
+	sub
+	push AX
+	idiv
+	push 2
+	idiv
+	out
+
+	hlt

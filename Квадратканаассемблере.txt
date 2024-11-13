@@ -31,6 +31,9 @@ jeq square
 jmp twosolves
 
 :linear
+	push BX
+	push 0
+	jeq badlinear
 	push CX
 	push 0
 	push BX
@@ -38,6 +41,9 @@ jmp twosolves
 	idiv
 	out
 	hlt
+
+:badlinear
+	err
 
 :nosolves
 	push DX

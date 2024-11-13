@@ -1,3 +1,3 @@
-push 3
+push 1
 meow
 hlt

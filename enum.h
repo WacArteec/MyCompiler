@@ -26,6 +26,7 @@ enum Cmd
     CMD_INS,
     CMD_DRAW,
     CMD_MEOW,
+    CMD_PRINT
 };
 
 #endif // ENUM_H

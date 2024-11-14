@@ -241,6 +241,21 @@ $$$ printf(" transfer = %d \n", transfer);
                     printf("\n\tmeoooow");
             }
 
+            case CMD_PRINT:
+            {
+                ip++;
+
+                int len = mach_code->code[ip];
+
+                for(int i = 0; i < len; i++)
+                {
+                    ip++;
+                    printf("%c", mach_code->code[ip]);
+                }
+
+                printf("\n");
+            }
+
             case CMD_HLT:
             {
                 return 0;

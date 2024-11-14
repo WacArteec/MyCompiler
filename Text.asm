@@ -1,3 +1,3 @@
-push 1
+push 150
 meow
 hlt

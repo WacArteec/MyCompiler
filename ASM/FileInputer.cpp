@@ -51,7 +51,7 @@ int StrCounter(struct Assembler* mach_code)
 
     for(size_t i = 0; i < mach_code->count_elements; i++)
     {
-        if(mach_code->text[i] == '\n')
+        if(mach_code->text[i] == '\r')
         {
             count_of_lines += 1;
         }

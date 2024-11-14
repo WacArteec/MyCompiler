@@ -28,16 +28,17 @@ int NumLen(int number);
 void CodeAndSkip (int comand, struct Assembler* asmer);
 void CodeIt(int comand, struct Assembler* asmer);
 void Skip(struct Assembler* asmer);
-void WritePush(struct Assembler* asmer);
+void WritePush(struct Assembler* asmer, unsigned int line);
 void TypicalJump(struct Assembler* asmer, int miss);
-void WritePopIt(struct Assembler* asmer);
+void WritePopIt(struct Assembler* asmer, unsigned int line);
+void WritePrint(struct Assembler* asmer, int* need_memory);
 
 void MumuCompiler(struct Assembler* asmer)
 {
     asmer->labels = (Marks*) calloc(20, sizeof(Marks));
 $$$ assert(asmer->labels);
 
-    int need_memory = 4 * asmer->count_lines;
+    int need_memory = 10 * asmer->count_lines;
 
     for(int k = 0; k < 2; k++)
     {
@@ -50,7 +51,7 @@ $$$     assert(asmer->code);
 //$$$ printf(" %d asmer.countelements = %u \n", __LINE__, asmer.count_elements);
 //$$$ printf("\n asmer.text = %d before compile \n", asmer.text);
 
-        for(unsigned int i = 0; i < asmer->count_lines; i++)
+        for(unsigned int line = 0; line < asmer->count_lines; line++)
         {
 //$$$         printf("count_comands = %d com = ", asmer.count_comands);
 
@@ -66,7 +67,7 @@ $$$     assert(asmer->code);
 
                 CodeIt(CMD_PUSH, asmer);
 
-                WritePush(asmer);
+                WritePush(asmer, line);
 
                 Skip(asmer);
             }
@@ -78,7 +79,7 @@ $$$     assert(asmer->code);
 
                 CodeIt(CMD_POP, asmer);
 
-                WritePopIt(asmer);
+                WritePopIt(asmer, line);
 
                 Skip(asmer);
             }
@@ -91,7 +92,7 @@ $$$     assert(asmer->code);
                 CodeAndSkip (CMD_OUT, asmer);
             }
 
-            else if(strncmp(asmer->text, "add", sizeof("add") - 1) == 0)         //
+            else if(strncmp(asmer->text, "add", sizeof("add") - 1) == 0)
             {
 //$$$ printf("add \n");
                 need_memory++;
@@ -99,7 +100,7 @@ $$$     assert(asmer->code);
                 CodeAndSkip (CMD_ADD, asmer);
             }
 
-            else if(strncmp(asmer->text, "mult", 4) == 0)
+            else if(strncmp(asmer->text, "mult", sizeof("mult") - 1) == 0)
             {
 //$$$ printf("mult \n");
                 need_memory++;
@@ -107,7 +108,7 @@ $$$     assert(asmer->code);
                 CodeAndSkip (CMD_MULT, asmer);
             }
 
-            else if(strncmp(asmer->text, "sub", 3) == 0)
+            else if(strncmp(asmer->text, "sub", sizeof("sub") - 1) == 0)
             {
 //$$$ printf("sub \n");
                 need_memory++;
@@ -115,7 +116,7 @@ $$$     assert(asmer->code);
                 CodeAndSkip(CMD_SUB, asmer);
             }
 
-            else if(strncmp(asmer->text, "idiv", 4) == 0)
+            else if(strncmp(asmer->text, "idiv", sizeof("idiv") - 1) == 0)
             {
 //$$$ printf("idiv \n");
                 need_memory++;
@@ -123,7 +124,7 @@ $$$     assert(asmer->code);
                 CodeAndSkip(CMD_DIV, asmer);
             }
 
-            else if(strncmp(asmer->text, "fsqrt", 5) == 0)
+            else if(strncmp(asmer->text, "fsqrt", sizeof("fsqrt") - 1) == 0)
             {
 //$$$ printf("fsqrt \n");
                 need_memory++;
@@ -131,7 +132,7 @@ $$$     assert(asmer->code);
                 CodeAndSkip(CMD_FSQRT, asmer);
             }
 
-            else if(strncmp(asmer->text, "ins", 3) == 0)
+            else if(strncmp(asmer->text, "ins", sizeof("ins") - 1) == 0)
             {
 //$$$ printf("ins \n");
                 need_memory++;
@@ -139,7 +140,7 @@ $$$     assert(asmer->code);
                 CodeAndSkip(CMD_INS, asmer);
             }
 
-            else if(strncmp(asmer->text, "draw", 4) == 0)
+            else if(strncmp(asmer->text, "draw", sizeof("draw") - 1) == 0)
             {
 //$$$ printf("draw \n");
                 need_memory++;
@@ -147,7 +148,7 @@ $$$     assert(asmer->code);
                 CodeAndSkip(CMD_DRAW, asmer);
             }
 
-            else if(strncmp(asmer->text, "hlt", 3) == 0)
+            else if(strncmp(asmer->text, "hlt", sizeof("hlt") - 1) == 0)
             {
 //$$$ printf("hlt \n");
                 need_memory++;
@@ -155,7 +156,7 @@ $$$     assert(asmer->code);
                 CodeAndSkip(CMD_HLT, asmer);
             }
 
-            else if(strncmp(asmer->text, "err", 3) == 0)
+            else if(strncmp(asmer->text, "err", sizeof("err") - 1) == 0)
             {
 //$$$ printf("hlt \n");
                 need_memory++;
@@ -163,7 +164,7 @@ $$$     assert(asmer->code);
                 CodeAndSkip(CMD_ERR, asmer);
             }
 
-            else if(strncmp(asmer->text, "jmp", 3) == 0)
+            else if(strncmp(asmer->text, "jmp", sizeof("jmp") - 1) == 0)
             {
 //$$$ printf("jmp \n");
                 need_memory += 2;
@@ -175,7 +176,7 @@ $$$     assert(asmer->code);
                 Skip(asmer);
             }
 
-            else if(strncmp(asmer->text, "ja", 2) == 0)
+            else if(strncmp(asmer->text, "ja", sizeof("ja") - 1) == 0)
             {
 //$$$ printf("ja \n");
                 need_memory += 2;
@@ -233,15 +234,27 @@ $$$     assert(asmer->code);
 
             else if(strncmp(asmer->text, "meow", 4) == 0)
             {
-//$$$ printf("meow \n");
+//$$$       printf("meow \n");
                 need_memory += 1;
 
                 CodeAndSkip(CMD_MEOW, asmer);
             }
 
+            else if(strncmp(asmer->text, "print", 5) == 0)
+            {
+//$$$       printf("meow \n");
+                need_memory += 1;
+
+                CodeIt(CMD_PRINT, asmer);
+
+                WritePrint(asmer, &need_memory);
+
+                Skip(asmer);
+            }
+
             else if(*(asmer->text) == ':') //Cï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½-ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½-ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½, ï¿½ ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ + ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½
             {
-//$$$ printf("LABEL! \n");
+//$$$       printf("LABEL! \n");
                 asmer->text++;
 
                 asmer->labels[asmer->count_labels].name = (char*) calloc(20, sizeof(char));
@@ -329,7 +342,7 @@ $$$ assert(asmer);
 // CheckReg
 // CheckLabel
 
-void WritePush(struct Assembler* asmer)
+void WritePush(struct Assembler* asmer, unsigned int line)
 {
     asmer->text += 4;
 
@@ -374,10 +387,9 @@ void WritePush(struct Assembler* asmer)
             asmer->code[asmer->count_comands + 1] = 4;
         }
 
-
         else
         {
-            printf("ERROR: This register does not exists! \n %s", asmer->text);
+            printf("ERROR: This register does not exists! \nline:%u: %s \n", line, asmer->text);
             exit(1);
         }
 
@@ -406,7 +418,7 @@ void WritePush(struct Assembler* asmer)
 
     if(asmer->code[asmer->count_comands - 3] == 4)
     {
-        printf("Error: you can't operate with RAM without number of position \n %s", (asmer->text - NumLen(in) - 4));
+        printf("Error: you can't operate with RAM without number of position \n line:%u: %s\n", line, (asmer->text - NumLen(in) - 4));
     }
 }
 
@@ -433,7 +445,7 @@ void TypicalJump(struct Assembler* asmer, int miss) // ï¿½ï¿½ï¿½ ï¿½ ï¿½ï¿½ï¿½ï¿
     asmer->count_comands++;
 }
 
-void WritePopIt(struct Assembler* asmer)
+void WritePopIt(struct Assembler* asmer, unsigned int line)
 {
     asmer->text += 3;
 
@@ -484,7 +496,7 @@ void WritePopIt(struct Assembler* asmer)
 
         else
         {
-            printf("ERROR: This register does not exists! \n %s", asmer->text);
+            printf("ERROR: This register does not exists! \nline:%u: %s\n", line, asmer->text);
             exit(1);
         }
 
@@ -513,16 +525,40 @@ void WritePopIt(struct Assembler* asmer)
 
     if(asmer->code[asmer->count_comands - 3] == 1)
     {
-        printf("Error: you can't pop into number \n %s", (asmer->text - NumLen(in) - 4));
+        printf("Error: you can't pop into number \nline:%u: %s\n", line, (asmer->text - NumLen(in) - 4));
     }
 
     if(asmer->code[asmer->count_comands - 3] == 3)
     {
-        printf("Error: you can't pop into register number \n %s", (asmer->text - NumLen(in) - 4));
+        printf("Error: you can't pop into register number \n line:%u %s\n", line, (asmer->text - NumLen(in) - 4));
     }
 
     if(asmer->code[asmer->count_comands - 3] == 4)
     {
-        printf("Error: you can't operate with RAM without number of position \n %s", (asmer->text - NumLen(in) - 4));
+        printf("Error: you can't operate with RAM without number of position \nline:%d: %s\n", line, (asmer->text - NumLen(in) - 4));
     }
+}
+
+void WritePrint(struct Assembler* asmer, int* need_memory)
+{
+    asmer->text += 6;
+
+    int shift = 0;
+    while(*(asmer->text) != '\0')
+    {
+$$$     printf("%c", *(asmer->text));
+        *need_memory++;
+        
+        asmer->code[asmer->count_comands + shift] = *(asmer->text);
+
+        asmer->text++;
+$$$     printf("%d ", (asmer->text));
+
+        shift++;
+    }
+
+    asmer->code[asmer->count_comands] = shift;
+
+    asmer->count_comands += shift + 1;
+
 }
